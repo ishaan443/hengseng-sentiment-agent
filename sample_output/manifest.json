@@ -1,0 +1,183 @@
+{
+  "mode": "synthetic",
+  "as_of": "2026-11-20T08:15:00+00:00",
+  "issued_at": "2026-11-20T08:15:00+00:00",
+  "pipeline_version": "0.1.0",
+  "code_sha256": "656b7459caef25cab2e8d5ce9a26516b9cc4435364614dd594b6eb0dc66356d6",
+  "python": "3.12.14",
+  "sentiment": {
+    "backend": "lexicon-v1",
+    "validated_for_finance": false,
+    "note": "Small EN/ZH/KO demonstration lexicon; sarcasm and target attribution unresolved."
+  },
+  "packages": {
+    "numpy": "2.3.5",
+    "pandas": "2.2.3",
+    "scikit-learn": "1.8.0",
+    "exchange-calendars": "4.13.3",
+    "httpx": "0.28.1"
+  },
+  "assets": [
+    {
+      "ticker": "0700.HK",
+      "name": "Tencent",
+      "exchange": "HKEX",
+      "calendar": "XHKG",
+      "currency": "HKD",
+      "aliases": [
+        "0700",
+        "00700",
+        "$0700",
+        "Tencent",
+        "騰訊",
+        "腾讯"
+      ]
+    },
+    {
+      "ticker": "9988.HK",
+      "name": "Alibaba",
+      "exchange": "HKEX",
+      "calendar": "XHKG",
+      "currency": "HKD",
+      "aliases": [
+        "9988",
+        "09988",
+        "$9988",
+        "Alibaba",
+        "阿里巴巴"
+      ]
+    },
+    {
+      "ticker": "0005.HK",
+      "name": "HSBC",
+      "exchange": "HKEX",
+      "calendar": "XHKG",
+      "currency": "HKD",
+      "aliases": [
+        "0005",
+        "00005",
+        "$0005",
+        "HSBC",
+        "匯豐",
+        "汇丰"
+      ]
+    },
+    {
+      "ticker": "3690.HK",
+      "name": "Meituan",
+      "exchange": "HKEX",
+      "calendar": "XHKG",
+      "currency": "HKD",
+      "aliases": [
+        "3690",
+        "03690",
+        "$3690",
+        "Meituan",
+        "美團",
+        "美团"
+      ]
+    },
+    {
+      "ticker": "1810.HK",
+      "name": "Xiaomi",
+      "exchange": "HKEX",
+      "calendar": "XHKG",
+      "currency": "HKD",
+      "aliases": [
+        "1810",
+        "01810",
+        "$1810",
+        "Xiaomi",
+        "小米"
+      ]
+    },
+    {
+      "ticker": "005930.KS",
+      "name": "Samsung Electronics",
+      "exchange": "KRX",
+      "calendar": "XKRX",
+      "currency": "KRW",
+      "aliases": [
+        "005930",
+        "$005930",
+        "Samsung Electronics",
+        "삼성전자"
+      ]
+    },
+    {
+      "ticker": "000660.KS",
+      "name": "SK hynix",
+      "exchange": "KRX",
+      "calendar": "XKRX",
+      "currency": "KRW",
+      "aliases": [
+        "000660",
+        "$000660",
+        "SK hynix",
+        "SK하이닉스",
+        "하이닉스"
+      ]
+    },
+    {
+      "ticker": "005380.KS",
+      "name": "Hyundai Motor",
+      "exchange": "KRX",
+      "calendar": "XKRX",
+      "currency": "KRW",
+      "aliases": [
+        "005380",
+        "$005380",
+        "Hyundai Motor",
+        "현대차",
+        "현대자동차"
+      ]
+    },
+    {
+      "ticker": "035420.KS",
+      "name": "NAVER",
+      "exchange": "KRX",
+      "calendar": "XKRX",
+      "currency": "KRW",
+      "aliases": [
+        "035420",
+        "$035420",
+        "NAVER",
+        "네이버"
+      ]
+    },
+    {
+      "ticker": "051910.KS",
+      "name": "LG Chem",
+      "exchange": "KRX",
+      "calendar": "XKRX",
+      "currency": "KRW",
+      "aliases": [
+        "051910",
+        "$051910",
+        "LG Chem",
+        "LG화학"
+      ]
+    }
+  ],
+  "files": {
+    "prices.csv": "748741cc09d059243203f2c4c95a66df376cd4a14975015bcfae098b5d3bdbb3",
+    "posts.jsonl": "ab346d7c4c135b603d2abeb3976703515a8e2d32d5566eb3a8929dd017f178d4",
+    "collection.json": "6a33bfea97fc8fff9888b1065354280a266392d24d4252c06b889aca80104001"
+  },
+  "validation": {
+    "min_train_dates": 60,
+    "test_block_dates": 15,
+    "gap_dates": 1,
+    "ridge_alpha": 10.0,
+    "selection": "fixed, no OOS tuning",
+    "target": "next-session raw close return"
+  },
+  "collection": {
+    "mode": "synthetic",
+    "seed": 42,
+    "as_of": "2026-11-20T08:15:00+00:00",
+    "rows": 21026,
+    "price_bars": 3005,
+    "note": "Entire history is generated. No real API collection or investment result."
+  }
+}

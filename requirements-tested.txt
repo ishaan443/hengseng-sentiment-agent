@@ -1,0 +1,12 @@
+# Direct dependency versions used for the verified Python 3.12 demonstration.
+# pyproject.toml supplies supported ranges; this file pins the tested top-level set.
+# This is not a hash-locked cross-platform dependency lock.
+numpy==2.3.5
+pandas==2.2.3
+scikit-learn==1.8.0
+scipy==1.17.0
+exchange-calendars==4.13.3
+httpx==0.28.1
+python-dotenv==1.2.2
+yfinance==0.2.66
+pytest==9.2.0

@@ -1,0 +1,12 @@
+[
+  {"ticker":"0700.HK","name":"Tencent","exchange":"HKEX","calendar":"XHKG","currency":"HKD","aliases":["0700","00700","$0700","Tencent","騰訊","腾讯"]},
+  {"ticker":"9988.HK","name":"Alibaba","exchange":"HKEX","calendar":"XHKG","currency":"HKD","aliases":["9988","09988","$9988","Alibaba","阿里巴巴"]},
+  {"ticker":"0005.HK","name":"HSBC","exchange":"HKEX","calendar":"XHKG","currency":"HKD","aliases":["0005","00005","$0005","HSBC","匯豐","汇丰"]},
+  {"ticker":"3690.HK","name":"Meituan","exchange":"HKEX","calendar":"XHKG","currency":"HKD","aliases":["3690","03690","$3690","Meituan","美團","美团"]},
+  {"ticker":"1810.HK","name":"Xiaomi","exchange":"HKEX","calendar":"XHKG","currency":"HKD","aliases":["1810","01810","$1810","Xiaomi","小米"]},
+  {"ticker":"005930.KS","name":"Samsung Electronics","exchange":"KRX","calendar":"XKRX","currency":"KRW","aliases":["005930","$005930","Samsung Electronics","삼성전자"]},
+  {"ticker":"000660.KS","name":"SK hynix","exchange":"KRX","calendar":"XKRX","currency":"KRW","aliases":["000660","$000660","SK hynix","SK하이닉스","하이닉스"]},
+  {"ticker":"005380.KS","name":"Hyundai Motor","exchange":"KRX","calendar":"XKRX","currency":"KRW","aliases":["005380","$005380","Hyundai Motor","현대차","현대자동차"]},
+  {"ticker":"035420.KS","name":"NAVER","exchange":"KRX","calendar":"XKRX","currency":"KRW","aliases":["035420","$035420","NAVER","네이버"]},
+  {"ticker":"051910.KS","name":"LG Chem","exchange":"KRX","calendar":"XKRX","currency":"KRW","aliases":["051910","$051910","LG Chem","LG화학"]}
+]

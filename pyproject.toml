@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hengseng-sentiment-agent"
+version = "0.1.0"
+description = "Auditable HKEX / KRX social and news sentiment research pipeline"
+requires-python = ">=3.11"
+dependencies = [
+  "numpy>=2.0,<3", "pandas>=2.2,<3", "scikit-learn>=1.6,<2",
+  "exchange-calendars>=4.13.3,<5", "httpx>=0.28,<1", "python-dotenv>=1,<2"
+]
+
+[project.optional-dependencies]
+live = ["yfinance>=0.2.54,<1"]
+nlp = ["transformers>=4.48,<5", "torch>=2.6,<3", "sentencepiece>=0.2,<1"]
+dev = ["pytest>=8,<10"]
+
+[project.scripts]
+hengseng = "hengseng.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+hengseng = ["report_template.html"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
