@@ -108,6 +108,8 @@ def collect(assets, config, data_dir, now=None):
     exa = httpx.Client(headers={"x-api-key": os.environ["EXA_API_KEY"]}, timeout=90)
     posts, failures, notices = [], [], []
     cap = config["max_results_per_query"]
+    telegram_rows = {}
+    telegram_errors = {}
 
     def accept(rows, source, asset):
         observed = pd.Timestamp.now(tz="UTC")
@@ -148,15 +150,23 @@ def collect(assets, config, data_dir, now=None):
                 accept(rows, source, asset)
             except SourceError as exc:
                 failures.append({"ticker": asset["ticker"], "source": source, "error": str(exc)})
-            try:
-                rows = runner.run("telegram", {"urls": config["telegram_channels"][asset["exchange"]],
-                    "collectMessages": True, "maxMessagesPerChannel": cap,
-                    "dateFrom": start.isoformat(), "dateTo": end.isoformat(),
-                    "searchQueries": asset["aliases"], "outputMode": "legacy",
-                    "exactSubscriberCount": True})
-                accept(rows, "telegram", asset)
-            except SourceError as exc:
-                failures.append({"ticker": asset["ticker"], "source": "telegram", "error": str(exc)})
+            # The tickers share the same channel feed. Fetch it once and match each post locally.
+            exchange = asset["exchange"]
+            if exchange not in telegram_rows:
+                telegram_rows[exchange] = []
+                try:
+                    telegram_rows[exchange] = runner.run("telegram", {
+                        "urls": config["telegram_channels"][exchange],
+                        "collectMessages": True, "maxMessagesPerChannel": cap,
+                        "dateFrom": start.date().isoformat(), "dateTo": end.date().isoformat(),
+                        "outputMode": "messages", "exactSubscriberCount": True})
+                except SourceError as exc:
+                    telegram_errors[exchange] = str(exc)
+            if exchange in telegram_errors:
+                failures.append({"ticker": asset["ticker"], "source": "telegram",
+                                 "error": telegram_errors[exchange]})
+            else:
+                accept(telegram_rows[exchange], "telegram", asset)
             try:
                 payload = {"query": f"{asset['name']} {asset['ticker']} earnings stock company news",
                            "category": "news", "type": "auto", "numResults": config["news_results_per_asset"],
@@ -167,6 +177,14 @@ def collect(assets, config, data_dir, now=None):
                 accept(result.get("results", []), "exa", asset)
             except SourceError as exc:
                 failures.append({"ticker": asset["ticker"], "source": "exa", "error": str(exc)})
+            own = [p for p in posts if p["ticker"] == asset["ticker"]]
+            counts = {name: sum(p["source"] == name for p in own) for name in (source, "telegram", "exa")}
+            print(asset["ticker"], counts, flush=True)
+        for failure in failures:
+            # HTTP codes and known terminal states only, never URLs, raw bodies or run identifiers.
+            message = failure["error"].split()
+            reason = next((word for word in message if len(word) == 3 and word.isdigit()), None)
+            print(failure["ticker"], failure["source"], reason or "request failed", flush=True)
     finally:
         runner.client.close()
         exa.close()

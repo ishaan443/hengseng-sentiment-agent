@@ -52,7 +52,8 @@ def normalize_row(row, source, asset, observed_at, start, end):
     elif source == "telegram":
         channel = row.get("channel", {})
         channel = channel if isinstance(channel, dict) else {"username": channel}
-        message = row.get("message", {})
+        message = row.get("message")
+        message = message if isinstance(message, dict) else {}
         text = text_clean(row.get("text") or message.get("description"))
         published = row.get("date") or message.get("fulldate")
         url = message.get("link") or row.get("url", "")

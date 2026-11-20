@@ -58,3 +58,9 @@ def test_rerun_cannot_rewrite_text_or_engagement(synthetic):
 def test_multilingual_baseline(text, sign):
     result = LexiconScorer().score([text])[0]
     assert result == sign
+
+
+def test_telegram_profile_without_message_is_skipped(assets):
+    row = {"username": "@public", "message": None}
+    stamp = "2026-11-20T08:00:00Z"
+    assert normalize_row(row, "telegram", assets[0], stamp, stamp, stamp) is None
