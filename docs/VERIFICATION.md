@@ -13,9 +13,9 @@ Verified on November 20, 2026 using Python 3.12. Direct package versions are in 
 | Outcome checking | Tested: exact target date, pending target, rejected late forecast |
 | HTML behavior | jsdom checks passed for all ten rows, five-stock exchange filters, sentiment sorting, two chart traces, fold table and no script errors |
 | Offline dashboard | No external resource URLs are loaded by the HTML |
-| Live Apify/Exa requests | Not executed; no user tokens or channel list supplied |
+| Live Apify/Exa requests | Not executed; live execution requires provider credentials |
 | Optional transformer | Adapter implemented; model download/inference not executed |
 | Visual browser rendering | Local Chromium launch was blocked by this environment’s process/socket restrictions; DOM behavior was checked instead |
-| GitHub/email | Private repository: https://github.com/ishaan443/hengseng-sentiment-agent; no message sent |
+| GitHub/email | Public repository: https://github.com/ishaan443/hengseng-sentiment-agent; no message sent |
 
 No test outcome establishes live data coverage, sentiment accuracy or profitable forecasting. The negative synthetic baseline comparison is retained in the report.

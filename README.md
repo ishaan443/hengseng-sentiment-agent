@@ -2,7 +2,7 @@
 
 A Python research pipeline for five HKEX and five KRX stocks. It combines two social platforms per exchange with Exa news, predicts the next trading session’s closing price, and produces an offline interactive report.
 
-**Delivery status:** the code, synthetic demonstration, chronological evaluation, tests and report are complete. **Live Apify/Exa collection has not been run.** API credentials and a curated public Telegram channel list are required. The project repository is [ishaan443/hengseng-sentiment-agent](https://github.com/ishaan443/hengseng-sentiment-agent) (private). No assessment email has been sent. The supplied numbers are synthetic, including prices.
+**Delivery status:** the code, synthetic demonstration, chronological evaluation, tests and report are complete. **Live Apify/Exa collection has not been run.** The live workflow requires two repository secrets. The project repository is [ishaan443/hengseng-sentiment-agent](https://github.com/ishaan443/hengseng-sentiment-agent) (public). No assessment email has been sent. The supplied numbers are synthetic, including prices.
 
 ## Start here
 
@@ -29,10 +29,16 @@ The demo uses seed 42 and simulated history from September 2025 to November 20, 
 
 The assignment is interpreted as covering Hong Kong and South Korea because it lists sources for those markets. Exa supplements the two social platforms; it is not counted as one of them. Tickers, cashtags, local-language company names and English aliases are configured in `config/assets.json`.
 
+## Run from GitHub
+
+Save `APIFY_TOKEN` and `EXA_API_KEY` as repository secrets under Settings → Secrets and variables → Actions. Open Actions → Live collection → Run workflow on main. A run uses provider credits. The default configuration permits up to 25 actor starts at a requested cap of US$1 each, plus 10 Exa searches. Actual charges depend on provider billing.
+
+The run summary lists how many posts and sources each ticker had at collection. Download the aggregate report from the run’s Artifacts section. Its price forecasts use the last session cutoff. Posts first observed after that cutoff can appear in the collection summary before they become eligible for forecasts. Each hosted run starts with an empty observation archive. Use the local procedure below to accumulate history and evaluate saved forecasts across sessions.
+
 ## Run against live sources
 
 1. Copy `.env.example` to `.env` and set `APIFY_TOKEN` and `EXA_API_KEY` locally.
-2. Add relevant public channel usernames/URLs under both `telegram_channels.HKEX` and `telegram_channels.KRX` in `config/sources.json`. Verify the channels actually discuss the selected stocks. Empty lists deliberately fail preflight rather than substituting irrelevant channels.
+2. The configured public Telegram sources are [智能講股](https://t.me/s/StockIntelligence) for HKEX and [번개맞은뉴스](https://t.me/s/stock_messenger) for KRX. Both carry market updates. Coverage of each ticker is measured on collection.
 3. Review the actor configuration and your API budgets. The defaults cap each actor run and request volume. There can be up to 25 actor starts per collection, plus 10 Exa searches. Per-run caps are not an overall account spending cap; configure that in the provider account too. Search caps mean the scrape is a bounded sample, not an exhaustive archive.
 4. Run the commands below. No credentials are needed for the demo; collection invokes paid services when configured.
 

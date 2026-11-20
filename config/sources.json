@@ -1,12 +1,28 @@
 {
   "actors": {
-    "lihkg": {"id":"claude_code_reviewer/lihkg-scraper-en","build":"latest"},
-    "naver": {"id":"hgservices/naver-stock-discussion-scraper","build":"latest"},
-    "telegram": {"id":"crawl_craft/telegram-scraper","build":"latest"}
+    "lihkg": {
+      "id": "claude_code_reviewer/lihkg-scraper-en",
+      "build": "latest"
+    },
+    "naver": {
+      "id": "hgservices/naver-stock-discussion-scraper",
+      "build": "latest"
+    },
+    "telegram": {
+      "id": "crawl_craft/telegram-scraper",
+      "build": "latest"
+    }
   },
-  "telegram_channels": {"HKEX":[],"KRX":[]},
+  "telegram_channels": {
+    "HKEX": [
+      "StockIntelligence"
+    ],
+    "KRX": [
+      "stock_messenger"
+    ]
+  },
   "max_results_per_query": 100,
-  "max_charge_usd_per_actor_run": 1.0,
+  "max_charge_usd_per_actor_run": 1,
   "actor_timeout_seconds": 300,
   "news_results_per_asset": 10
 }
