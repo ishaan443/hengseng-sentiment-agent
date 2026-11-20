@@ -2,7 +2,7 @@
 
 A Python research pipeline for five HKEX and five KRX stocks. It combines two social platforms per exchange with Exa news, predicts the next trading session’s closing price, and produces an offline interactive report.
 
-**Delivery status:** the code, synthetic demonstration, chronological evaluation, tests and report are complete. **Live Apify/Exa collection has not been run.** The live workflow requires two repository secrets. The project repository is [ishaan443/hengseng-sentiment-agent](https://github.com/ishaan443/hengseng-sentiment-agent) (public). No assessment email has been sent. The supplied numbers are synthetic, including prices.
+
 
 ## Start here
 
