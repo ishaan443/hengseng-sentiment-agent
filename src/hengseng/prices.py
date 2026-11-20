@@ -63,6 +63,17 @@ def fetch_prices(assets, destination, days=540, now=None):
                                                     auto_adjust=False, actions=True, raise_errors=True)
             if raw.empty:
                 raise ValueError("empty response")
+            # Vendors can include action-only rows with no executable bar.
+            prices = ["Open", "High", "Low", "Close", "Volume"]
+            valid = np.isfinite(raw[prices]).all(axis=1)
+            valid &= raw[prices[:4]].gt(0).all(axis=1) & raw.Volume.ge(0)
+            valid &= raw.High.ge(raw[["Open", "Close", "Low"]].max(axis=1))
+            valid &= raw.Low.le(raw[["Open", "Close"]].min(axis=1))
+            if not valid.all():
+                print(f"{asset['ticker']}: excluded {int((~valid).sum())} invalid price rows")
+            raw = raw.loc[valid]
+            if raw.empty:
+                raise ValueError("no valid price bars")
             sched = schedule(asset, start, end)
             closes = {d.date().isoformat(): utc(r.close) for d, r in sched.iterrows()}
             for stamp, r in raw.iterrows():

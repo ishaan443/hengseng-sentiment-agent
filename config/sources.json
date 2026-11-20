@@ -24,5 +24,13 @@
   "max_results_per_query": 100,
   "max_charge_usd_per_actor_run": 1,
   "actor_timeout_seconds": 300,
-  "news_results_per_asset": 10
+  "news_results_per_asset": 10,
+  "reuse_minutes": 90,
+  "telegram_fallback_channels": {
+    "KRX": [
+      "petrochem_wooho",
+      "companyreport",
+      "moneythemestock"
+    ]
+  }
 }

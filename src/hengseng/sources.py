@@ -46,6 +46,35 @@ class ApifyRunner:
         self.client = client or httpx.Client(headers={"Authorization": f"Bearer {token}"}, timeout=60)
         self.base = "https://api.apify.com/v2"
         self.runs = []
+        self.recent_inputs = {}
+
+    def matching_recent_runs(self, source, run_input, actor_path):
+        minutes = self.config.get("reuse_minutes", 0)
+        if not minutes:
+            return []
+        if source not in self.recent_inputs:
+            cutoff = pd.Timestamp.now(tz="UTC") - pd.Timedelta(minutes=minutes)
+            items = request(self.client, "GET", actor_path, params={
+                "desc": "true", "limit": 100, "status": "SUCCEEDED"})["data"]["items"]
+            recent = []
+            for item in items:
+                if utc(item["startedAt"]) < cutoff:
+                    break
+                store = item["defaultKeyValueStoreId"]
+                saved = request(self.client, "GET", f"{self.base}/key-value-stores/{store}/records/INPUT")
+                recent.append((item, saved))
+            self.recent_inputs[source] = recent
+        return [item for item, saved in self.recent_inputs[source]
+                if all(saved.get(k) == v for k, v in run_input.items())]
+
+    def dataset_rows(self, dataset):
+        rows = []
+        while True:
+            batch = request(self.client, "GET", f"{self.base}/datasets/{dataset}/items",
+                            params={"offset": len(rows), "limit": 1000, "clean": "true"})
+            rows.extend(batch)
+            if len(batch) < 1000:
+                return rows
 
     def run(self, source, run_input):
         actor = self.config["actors"][source]
@@ -54,6 +83,16 @@ class ApifyRunner:
         record = {"source": source, "actor_id": actor["id"], "requested_build": actor["build"],
                   "input": run_input, "request_hash": fingerprint}
         write_json(self.archive / f"{fingerprint}-request.json", record)
+        matches = self.matching_recent_runs(source, run_input, path)
+        if matches:
+            rows = []
+            for item in matches:
+                data = self.dataset_rows(item["defaultDatasetId"])
+                self.runs.append({**record, "run_id": item["id"], "status": "SUCCEEDED",
+                                  "reused": True, "row_count": len(data)})
+                rows.extend(data)
+            write_json(self.archive / f"{fingerprint}-reused.json", rows)
+            return rows
         run = request(self.client, "POST", path, json=run_input,
                       params={"build": actor["build"], "timeout": self.config["actor_timeout_seconds"],
                               "maxTotalChargeUsd": self.config["max_charge_usd_per_actor_run"]})["data"]
@@ -74,14 +113,7 @@ class ApifyRunner:
         write_json(self.archive / f"{run['id']}-run.json", record)
         if run["status"] != "SUCCEEDED":
             raise SourceError(f"Actor run {run['id']} ended {run['status']}")
-        rows, offset = [], 0
-        while True:
-            batch = request(self.client, "GET", f"{self.base}/datasets/{run['defaultDatasetId']}/items",
-                            params={"offset": offset, "limit": 1000, "clean": "true"})
-            rows.extend(batch)
-            if len(batch) < 1000:
-                break
-            offset += len(batch)
+        rows = self.dataset_rows(run["defaultDatasetId"])
         record["row_count"] = len(rows)
         record["data_sha256"] = digest(rows)
         write_json(self.archive / f"{run['id']}-run.json", record)
@@ -143,11 +175,19 @@ def collect(assets, config, data_dir, now=None):
                     # Full-thread mode is needed to get body text rather than search titles only.
                     rows = runner.run(source, {"mode": "thread", "threadIds": ids,
                                                "maxItems": len(ids)}) if ids else []
+                    # An in-window search title is itself a timestamped forum observation.
+                    # Keep richer, duplicate thread records first.
+                    rows.extend(listing)
                 else:
                     rows = runner.run(source, {"stocks": [asset["ticker"].split(".")[0]],
                                                "dateFrom": start.tz_convert("Asia/Seoul").date().isoformat(),
                                                "maxResults": cap})
-                accept(rows, source, asset)
+                matched = accept(rows, source, asset)
+                if not matched and source == "lihkg":
+                    # Naver also hosts dedicated boards for HK listings. Only accept the exact board.
+                    rows = runner.run("naver", {"stocks": [asset["ticker"]],
+                        "dateFrom": start.tz_convert("Asia/Seoul").date().isoformat(), "maxResults": cap})
+                    accept(rows, "naver", asset)
             except SourceError as exc:
                 failures.append({"ticker": asset["ticker"], "source": source, "error": str(exc)})
             # The tickers share the same channel feed. Fetch it once and match each post locally.
@@ -166,7 +206,17 @@ def collect(assets, config, data_dir, now=None):
                 failures.append({"ticker": asset["ticker"], "source": "telegram",
                                  "error": telegram_errors[exchange]})
             else:
-                accept(telegram_rows[exchange], "telegram", asset)
+                matched = accept(telegram_rows[exchange], "telegram", asset)
+                extra = config.get("telegram_fallback_channels", {}).get(exchange, [])
+                if not matched and extra:
+                    try:
+                        rows = runner.run("telegram", {
+                            "urls": extra, "collectMessages": True, "maxMessagesPerChannel": 50,
+                            "dateFrom": start.date().isoformat(), "dateTo": end.date().isoformat(),
+                            "searchQueries": [asset["aliases"][-1]], "outputMode": "messages"})
+                        accept(rows, "telegram", asset)
+                    except SourceError as exc:
+                        failures.append({"ticker": asset["ticker"], "source": "telegram", "error": str(exc)})
             try:
                 payload = {"query": f"{asset['name']} {asset['ticker']} earnings stock company news",
                            "category": "news", "type": "auto", "numResults": config["news_results_per_asset"],
@@ -188,6 +238,7 @@ def collect(assets, config, data_dir, now=None):
     finally:
         runner.client.close()
         exa.close()
+        posts = merge_first_observations([], posts)
         write_jsonl(data_dir / "posts.jsonl", merge_first_observations(
             read_jsonl(data_dir / "posts.jsonl"), posts))
         coverage = []

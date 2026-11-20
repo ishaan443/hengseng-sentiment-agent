@@ -38,6 +38,7 @@ def main():
             payload[name] = json.loads((results / f"{name}.json").read_text())
         write_report(out / "report.html", payload)
         copyfile(results / "rankings.csv", out / "rankings.csv")
+        copyfile(results / "forecast_ledger.jsonl", out / "forecast_ledger.jsonl")
 
 
 if __name__ == "__main__":

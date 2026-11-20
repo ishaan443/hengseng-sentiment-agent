@@ -43,7 +43,9 @@ def normalize_row(row, source, asset, observed_at, start, end):
     elif source == "naver":
         if row.get("type") == "notice":
             return None
-        if str(row.get("stockCode")) != asset["ticker"].split(".")[0]:
+        board = str(row.get("stockCode", "")).upper()
+        expected = asset["ticker"] if asset["exchange"] == "HKEX" else asset["ticker"].split(".")[0]
+        if board.lstrip("0") != expected.lstrip("0"):
             return None
         text = text_clean(str(row.get("title") or "") + " " + str(row.get("text") or ""))
         identifier, published, url = row.get("postId"), row.get("writtenAt"), row.get("url", "")

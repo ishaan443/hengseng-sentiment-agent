@@ -13,7 +13,7 @@ import pandas as pd
 from . import __version__
 from .common import digest, read_json, read_jsonl, utc, write_json, write_jsonl
 from .demo import generate
-from .features import build_features
+from .features import build_features, sentiment_snapshot
 from .model import evaluate_saved, forecast_latest, metrics, walk_forward
 from .prices import fetch_prices, validate_prices
 from .report import write_report
@@ -41,6 +41,17 @@ def analyse(data_dir, out_dir, assets, as_of=None, backend="lexicon"):
     oos, folds = walk_forward(features)
     # A historical replay must never pretend it was actually issued in the past.
     issued_at = as_of if mode == "synthetic" else pd.Timestamp.now(tz="UTC")
+    if mode == "live":
+        # At issuance the latest completed bar can use observations collected since its close.
+        # Historical training and evaluation retain their original close-time cutoffs.
+        features = features.copy()
+        for index in features.groupby("ticker").tail(1).index:
+            if as_of < features.at[index, "target_close_time"]:
+                ticker = features.at[index, "ticker"]
+                snapshot = sentiment_snapshot([p for p in posts if p["ticker"] == ticker], as_of)
+                for field, value in snapshot.items():
+                    features.at[index, field] = value
+                features.at[index, "cutoff"] = as_of
     forecasts = forecast_latest(features, oos, issued_at)
     out_dir.mkdir(parents=True, exist_ok=True)
     source_root = Path(__file__).parent
