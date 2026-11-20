@@ -106,8 +106,3 @@ docs/                    Methodology, schemas, actor references and submission g
 sample_output/           Generated synthetic report and audit artifacts
 ```
 
-## Before submission
-
-Read `docs/SUBMISSION_CHECKLIST.md` and `docs/METHODOLOGY.md`. Replace synthetic-only evidence with an honest live collection report after configuring credentials. Keep `.env`, raw user content and tokens out of Git. Share the repository URL and actor/run/build identifiers. Provide narrowly scoped, temporary reproduction credentials privately if the assessor requires them; never commit them to the repository.
-
-The assessment email mentions Tavily, but the technical scope explicitly requests Exa. This implementation uses Apify and Exa and does not require a Tavily token.
