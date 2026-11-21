@@ -1,0 +1,90 @@
+[
+  {
+    "ticker": "0700.HK",
+    "scored_mentions": 28,
+    "social_sentiment": -0.047619047619047616,
+    "source_scores": {
+      "lihkg": 0.0,
+      "telegram": -0.09523809523809523
+    }
+  },
+  {
+    "ticker": "9988.HK",
+    "scored_mentions": 37,
+    "social_sentiment": 0.00931929064312096,
+    "source_scores": {
+      "lihkg": 0.09271265536031599,
+      "telegram": -0.07407407407407407
+    }
+  },
+  {
+    "ticker": "0005.HK",
+    "scored_mentions": 3,
+    "social_sentiment": 0.0,
+    "source_scores": {
+      "lihkg": 0.0,
+      "telegram": 0.0
+    }
+  },
+  {
+    "ticker": "3690.HK",
+    "scored_mentions": 16,
+    "social_sentiment": 0.0,
+    "source_scores": {
+      "telegram": 0.0
+    }
+  },
+  {
+    "ticker": "1810.HK",
+    "scored_mentions": 30,
+    "social_sentiment": -0.038461538461538464,
+    "source_scores": {
+      "lihkg": 0.0,
+      "telegram": -0.07692307692307693
+    }
+  },
+  {
+    "ticker": "005930.KS",
+    "scored_mentions": 115,
+    "social_sentiment": -0.12554634244924923,
+    "source_scores": {
+      "naver": -0.011840805249298855,
+      "telegram": -0.2392518796491996
+    }
+  },
+  {
+    "ticker": "000660.KS",
+    "scored_mentions": 113,
+    "social_sentiment": -0.20034668756495838,
+    "source_scores": {
+      "naver": -0.08963231781637587,
+      "telegram": -0.3110610573135409
+    }
+  },
+  {
+    "ticker": "005380.KS",
+    "scored_mentions": 104,
+    "social_sentiment": -0.024176907162007107,
+    "source_scores": {
+      "naver": -0.04835381432401421,
+      "telegram": 0.0
+    }
+  },
+  {
+    "ticker": "035420.KS",
+    "scored_mentions": 159,
+    "social_sentiment": -0.04904206981635034,
+    "source_scores": {
+      "naver": -0.09808413963270068,
+      "telegram": 0.0
+    }
+  },
+  {
+    "ticker": "051910.KS",
+    "scored_mentions": 100,
+    "social_sentiment": 0.03260450511115975,
+    "source_scores": {
+      "naver": 0.03260450511115975
+    }
+  }
+]
