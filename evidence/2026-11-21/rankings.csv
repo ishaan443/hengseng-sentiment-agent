@@ -1,0 +1,11 @@
+ticker,name,exchange,currency,session,latest_close,target_session,predicted_price,forecast_method,direction,paper_position,social_mentions,news_count,social_sources,support,resistance,price_source
+9988.HK,Alibaba,HKEX,HKD,2026-11-20,83.35,2026-11-23,83.35,persistence_fallback,FLAT,FLAT,22,10,"lihkg, telegram",80.2,109.4,https://stockanalysis.com/quote/hkg/9988/history/
+1810.HK,Xiaomi,HKEX,HKD,2026-11-20,27.64,2026-11-23,27.64,persistence_fallback,FLAT,FLAT,18,10,"lihkg, telegram",25.4,31.74,https://stockanalysis.com/quote/hkg/1810/history/
+0700.HK,Tencent,HKEX,HKD,2026-11-20,344,2026-11-23,344,persistence_fallback,FLAT,FLAT,17,10,"lihkg, telegram",339.6,431.2,https://stockanalysis.com/quote/hkg/0700/history/
+3690.HK,Meituan,HKEX,HKD,2026-11-20,66.5,2026-11-23,66.5,persistence_fallback,FLAT,FLAT,9,8,telegram,66.1,83,https://stockanalysis.com/quote/hkg/3690/history/
+0005.HK,HSBC,HKEX,HKD,2026-11-20,129.2,2026-11-23,129.2,persistence_fallback,FLAT,FLAT,3,10,"lihkg, telegram",128.6,143.3,https://stockanalysis.com/quote/hkg/0005/history/
+035420.KS,NAVER,KRX,KRW,2026-11-20,161600,2026-11-23,161600,persistence_fallback,FLAT,FLAT,156,10,"naver, telegram",160900,197900,https://stockanalysis.com/quote/krx/035420/history/
+005930.KS,Samsung Electronics,KRX,KRW,2026-11-20,183100,2026-11-23,183100,persistence_fallback,FLAT,FLAT,114,10,"naver, telegram",179200,249000,https://stockanalysis.com/quote/krx/005930/history/
+000660.KS,SK hynix,KRX,KRW,2026-11-20,1113000,2026-11-23,1113000,persistence_fallback,FLAT,FLAT,112,10,"naver, telegram",1089000,1587000,https://stockanalysis.com/quote/krx/000660/history/
+005380.KS,Hyundai Motor,KRX,KRW,2026-11-20,255000,2026-11-23,255000,persistence_fallback,FLAT,FLAT,104,10,"naver, telegram",252000,309500,https://stockanalysis.com/quote/krx/005380/history/
+051910.KS,LG Chem,KRX,KRW,2026-11-20,203000,2026-11-23,203000,persistence_fallback,FLAT,FLAT,100,10,naver,200500,253500,https://stockanalysis.com/quote/krx/051910/history/

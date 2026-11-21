@@ -4,6 +4,12 @@ A Python research pipeline for five HKEX and five KRX stocks. It combines two so
 
 
 
+## Live assessment evidence
+
+The [November 21 report](evidence/2026-11-21/report.html) ranks ten stocks using 655 social mentions and 98 Exa news observations. Download the HTML and open it locally. [Rankings](evidence/2026-11-21/rankings.csv) include source links, November 20 closing prices and 20-session price levels. Eight tickers had two social platforms and news. Meituan and LG Chem had one social platform each.
+
+The [November 23 ledger](evidence/2026-11-21/forecast_ledger.jsonl) records unchanged-close baselines issued before the target session. The [historical baseline check](evidence/2026-11-21/historical_baseline.csv) compares 490 prior-close estimates with their observed next closes. The live snapshot has insufficient observation history to validate the sentiment model. Forecasts from the [November 20 collection](https://github.com/ishaan443/hengseng-sentiment-agent/actions/runs/44798540290) arrived after their target close and were excluded. The Python model and the synthetic evaluation are reproducible below.
+
 ## Start here
 
 Requires Python 3.11 or later. Run commands from this directory.

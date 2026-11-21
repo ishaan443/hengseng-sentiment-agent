@@ -53,6 +53,8 @@ def analyse(data_dir, out_dir, assets, as_of=None, backend="lexicon"):
                     features.at[index, field] = value
                 features.at[index, "cutoff"] = as_of
     forecasts = forecast_latest(features, oos, issued_at)
+    if mode == "live":
+        forecasts = [r for r in forecasts if issued_at < utc(r["target_close_time"])]
     out_dir.mkdir(parents=True, exist_ok=True)
     source_root = Path(__file__).parent
     code_hashes = {p.name: hashlib.sha256(p.read_bytes()).hexdigest()

@@ -1,0 +1,105 @@
+{
+  "start": "2026-11-10T19:04:01.355145+00:00",
+  "end": "2026-11-20T19:04:01.355145+00:00",
+  "coverage": [
+    {
+      "ticker": "0700.HK",
+      "social_sources": [
+        "lihkg",
+        "telegram"
+      ],
+      "posts": 27,
+      "news": 10,
+      "meets_requirement": true
+    },
+    {
+      "ticker": "9988.HK",
+      "social_sources": [
+        "lihkg",
+        "telegram"
+      ],
+      "posts": 32,
+      "news": 10,
+      "meets_requirement": true
+    },
+    {
+      "ticker": "0005.HK",
+      "social_sources": [
+        "lihkg",
+        "telegram"
+      ],
+      "posts": 13,
+      "news": 10,
+      "meets_requirement": true
+    },
+    {
+      "ticker": "3690.HK",
+      "social_sources": [
+        "telegram"
+      ],
+      "posts": 17,
+      "news": 8,
+      "meets_requirement": false
+    },
+    {
+      "ticker": "1810.HK",
+      "social_sources": [
+        "lihkg",
+        "telegram"
+      ],
+      "posts": 28,
+      "news": 10,
+      "meets_requirement": true
+    },
+    {
+      "ticker": "005930.KS",
+      "social_sources": [
+        "naver",
+        "telegram"
+      ],
+      "posts": 124,
+      "news": 10,
+      "meets_requirement": true
+    },
+    {
+      "ticker": "000660.KS",
+      "social_sources": [
+        "naver",
+        "telegram"
+      ],
+      "posts": 122,
+      "news": 10,
+      "meets_requirement": true
+    },
+    {
+      "ticker": "005380.KS",
+      "social_sources": [
+        "naver",
+        "telegram"
+      ],
+      "posts": 114,
+      "news": 10,
+      "meets_requirement": true
+    },
+    {
+      "ticker": "035420.KS",
+      "social_sources": [
+        "naver",
+        "telegram"
+      ],
+      "posts": 166,
+      "news": 10,
+      "meets_requirement": true
+    },
+    {
+      "ticker": "051910.KS",
+      "social_sources": [
+        "naver"
+      ],
+      "posts": 110,
+      "news": 10,
+      "meets_requirement": false
+    }
+  ],
+  "failed_requests": 2
+}
